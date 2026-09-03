@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Message — Birthday Section</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fff8ec;
+    --ink:#3a2a1a;
+    --coral:#ff6b5b;
+    --coral-dark:#e14d3d;
+    --sun:#ffc93c;
+    --pink:#ff8fb1;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'Nunito',sans-serif; background:var(--cream); color:var(--ink); }
+  h2{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(2rem,5vw,2.8rem); text-align:center; }
+  h2 span{ color:var(--coral-dark); }
+  .eyebrow{
+    font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--coral-dark);
+    letter-spacing:.08em; text-transform:uppercase; font-size:.82rem; text-align:center; margin-bottom:.5rem;
+  }
+  .sub{ color:#7a6650; text-align:center; max-width:42ch; margin:.6rem auto 2.6rem; font-weight:600; }
+  section{ padding:5rem 1.5rem; display:flex; flex-direction:column; align-items:center; min-height:100vh; justify-content:center; }
+
+  #voice{ background:linear-gradient(180deg,#fff8ec,#ffeedb); }
+  .voice-card{
+    background:var(--card); border-radius:20px; padding:1.6rem 1.8rem;
+    max-width:420px; width:100%;
+    box-shadow:0 10px 26px rgba(58,42,26,.1);
+    display:flex; align-items:center; gap:1rem;
+  }
+  .voice-avatar{
+    width:54px; height:54px; border-radius:50%;
+    background:linear-gradient(135deg,var(--coral),var(--pink));
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.4rem; flex-shrink:0;
+  }
+  .voice-body{ flex:1; }
+  .voice-name{ font-family:'Baloo 2',sans-serif; font-weight:700; font-size:.95rem; margin-bottom:.5rem; }
+  .voice-controls{ display:flex; align-items:center; gap:.7rem; }
+  .play-btn{
+    width:38px; height:38px; border-radius:50%; border:none;
+    background:var(--ink); color:var(--cream); font-size:1rem; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .wave{ flex:1; display:flex; align-items:center; gap:2px; height:28px; cursor:pointer; }
+  .wave span{
+    width:3px; background:var(--coral); border-radius:2px; flex-shrink:0;
+    transition:background .2s ease;
+  }
+  .wave span.played{ background:var(--sun); }
+  .voice-time{ font-size:.72rem; color:#a08a70; font-weight:700; min-width:34px; text-align:right; }
+</style>
+</head>
+<body>
+
+<section id="voice">
+  <div class="eyebrow">🎙️ Something to press play on</div>
+  <h2>A <span>Voice Message</span> For You</h2>
+  <p class="sub">Some things are better said out loud. Press play whenever you're ready.</p>
+  <div class="voice-card">
+    <div class="voice-avatar">👵</div>
+    <div class="voice-body">
+      <div class="voice-name">A message from Nani</div>
+      <div class="voice-controls">
+        <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+        <div class="wave" id="wave"></div>
+        <div class="voice-time" id="waveTime">0:24</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const bars = 40;
+  const waveEl = document.getElementById('wave');
+  for(let i=0;i<bars;i++){
+    const h = 6 + Math.round(Math.random()*20);
+    const s = document.createElement('span');
+    s.style.height = h+'px';
+    waveEl.appendChild(s);
+  }
+  let playing = false;
+  let playTimer = null;
+  let progress = 0;
+  const totalBars = bars;
+
+  function togglePlay(){
+    const btn = document.getElementById('playBtn');
+    if(playing){
+      clearInterval(playTimer);
+      playing = false;
+      btn.textContent = '▶';
+      return;
+    }
+    playing = true;
+    btn.textContent = '❚❚';
+    const spans = waveEl.querySelectorAll('span');
+    playTimer = setInterval(()=>{
+      if(progress >= totalBars){
+        clearInterval(playTimer);
+        playing = false;
+        btn.textContent = '▶';
+        progress = 0;
+        spans.forEach(s=>s.classList.remove('played'));
+        return;
+      }
+      spans[progress].classList.add('played');
+      progress++;
+      document.getElementById('waveTime').textContent =
+        '0:' + String(24 - Math.round(progress*24/totalBars)).padStart(2,'0');
+    }, 600/(totalBars/40));
+  }
+</script>
+
+</body>
+</html>

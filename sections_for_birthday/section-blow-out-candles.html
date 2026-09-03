@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blow Out the Candles — Birthday Section</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fff8ec;
+    --sun:#ffc93c;
+    --teal:#1fb6a5;
+    --coral:#ff6b5b;
+    --navy:#241a3d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'Nunito',sans-serif; background:var(--navy); color:var(--cream); }
+  h2{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(2rem,5vw,2.8rem); text-align:center; }
+  .eyebrow{
+    font-family:'Baloo 2',sans-serif; font-weight:700;
+    letter-spacing:.08em; text-transform:uppercase; font-size:.82rem; text-align:center; margin-bottom:.5rem;
+  }
+  section{ padding:5rem 1.5rem; display:flex; flex-direction:column; align-items:center; min-height:100vh; justify-content:center; }
+
+  #candles{
+    background:radial-gradient(circle at 50% 0%, #3a2a5c, var(--navy) 70%);
+    color:var(--cream);
+    width:100%;
+  }
+  #candles .eyebrow{ color:var(--sun); }
+  #candles h2{ color:var(--cream); }
+  #candles h2 span{ color:var(--sun); }
+  #candles .sub{ color:#c9bfe0; text-align:center; max-width:42ch; margin:.6rem auto 2.6rem; font-weight:600; }
+
+  .cake-wrap{ position:relative; margin-top:1rem; }
+  .cake{
+    width:220px; height:110px;
+    background:linear-gradient(180deg,#ffd9e8,#ff9fc0);
+    border-radius:14px 14px 30px 30px;
+    position:relative;
+    box-shadow:inset 0 -10px 0 rgba(0,0,0,.08);
+  }
+  .cake::before{
+    content:'';
+    position:absolute; top:-18px; left:6px; right:6px; height:26px;
+    background:linear-gradient(180deg,#fff,#ffe4ef);
+    border-radius:14px;
+  }
+  .candle{
+    position:absolute; top:-70px; width:8px; height:46px;
+    background:repeating-linear-gradient(180deg,var(--teal) 0 8px, var(--sun) 8px 16px);
+    border-radius:3px;
+  }
+  .flame{
+    position:absolute; top:-16px; left:50%; transform:translateX(-50%);
+    width:12px; height:18px; border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    background:radial-gradient(circle at 50% 70%, #fff6c8, var(--sun) 60%, var(--coral) 100%);
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .candle.out .flame{ opacity:0; transform:translateX(-50%) scale(.3); }
+  .smoke{
+    position:absolute; top:-20px; left:50%; transform:translateX(-50%);
+    width:4px; height:4px; border-radius:50%;
+    background:rgba(255,255,255,.5);
+    opacity:0;
+  }
+  .candle.out .smoke{ animation:puff 1.2s ease forwards; }
+  @keyframes puff{
+    0%{ opacity:.8; transform:translate(-50%,0) scale(1); }
+    100%{ opacity:0; transform:translate(-50%,-30px) scale(4); }
+  }
+  .blow-btn{
+    margin-top:3.6rem;
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:1rem;
+    background:var(--sun); color:var(--navy); border:none; padding:1rem 2.4rem;
+    border-radius:100px; cursor:pointer; box-shadow:0 6px 0 #b98c1e;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .blow-btn:active{ transform:translateY(4px); box-shadow:0 2px 0 #b98c1e; }
+  .made-wish{
+    margin-top:1.6rem; font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--sun);
+    opacity:0; transition:opacity .5s ease;
+  }
+  .made-wish.show{ opacity:1; }
+</style>
+</head>
+<body>
+
+<section id="candles">
+  <div class="eyebrow">🕯️ Make it count</div>
+  <h2>Blow Out the <span>Candles</span></h2>
+  <p class="sub">Hold the button and make a wish — the candles will listen.</p>
+  <div class="cake-wrap">
+    <div class="candle" id="c1" style="left:60px;"><div class="flame"></div><div class="smoke"></div></div>
+    <div class="candle" id="c2" style="left:106px;"><div class="flame"></div><div class="smoke"></div></div>
+    <div class="candle" id="c3" style="left:152px;"><div class="flame"></div><div class="smoke"></div></div>
+    <div class="cake"></div>
+  </div>
+  <button class="blow-btn" id="blowBtn" onmousedown="blow()" ontouchstart="blow()">Hold to blow 🎂</button>
+  <div class="made-wish" id="madeWish">Wish made. It's already coming true. ✨</div>
+</section>
+
+<script>
+  function blow(){
+    document.querySelectorAll('.candle').forEach((c,i)=>{
+      setTimeout(()=> c.classList.add('out'), i*180);
+    });
+    setTimeout(()=> document.getElementById('madeWish').classList.add('show'), 700);
+  }
+</script>
+
+</body>
+</html>

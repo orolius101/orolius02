@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open When Letters — Birthday Section</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fff8ec;
+    --sun:#ffc93c;
+    --navy:#241a3d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'Nunito',sans-serif; background:var(--navy); color:var(--cream); }
+  h2{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(2rem,5vw,2.8rem); text-align:center; }
+  .eyebrow{
+    font-family:'Baloo 2',sans-serif; font-weight:700;
+    letter-spacing:.08em; text-transform:uppercase; font-size:.82rem; text-align:center; margin-bottom:.5rem;
+  }
+  section{ padding:5rem 1.5rem; display:flex; flex-direction:column; align-items:center; min-height:100vh; justify-content:center; }
+
+  #openwhen{ background:radial-gradient(circle at 50% 0%, #3a2a5c, var(--navy) 70%); color:var(--cream); }
+  #openwhen .eyebrow{ color:var(--sun); }
+  #openwhen h2{ color:var(--cream); }
+  #openwhen h2 span{ color:var(--sun); }
+  #openwhen .sub{ color:#c9bfe0; text-align:center; max-width:42ch; margin:.6rem auto 2.6rem; font-weight:600; }
+
+  .letters-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px;
+    max-width:720px; width:100%;
+  }
+  .letter{
+    background:linear-gradient(160deg,#3f2f66,#2c2049);
+    border:1px solid #55447f;
+    border-radius:14px; padding:1.4rem 1rem; text-align:center; cursor:pointer;
+    transition:transform .2s ease, border-color .2s ease;
+  }
+  .letter:hover{ transform:translateY(-4px); border-color:var(--sun); }
+  .letter .icon{ font-size:1.6rem; display:block; margin-bottom:.6rem; }
+  .letter .when{ font-family:'Baloo 2',sans-serif; font-weight:700; font-size:.88rem; color:var(--sun); margin-bottom:.3rem; }
+  .letter .status{ font-size:.72rem; color:#a99ecf; }
+  .letter.opened{ background:linear-gradient(160deg,#4a3a75,#332758); }
+  .letter-msg{
+    display:none; font-size:.8rem; color:#e6dcff; margin-top:.6rem; line-height:1.5; font-weight:600;
+  }
+  .letter.opened .letter-msg{ display:block; }
+  .letter.opened .status{ display:none; }
+</style>
+</head>
+<body>
+
+<section id="openwhen">
+  <div class="eyebrow">✉️ For later, not now</div>
+  <h2><span>Open When</span> Letters</h2>
+  <p class="sub">Save these for the right moment. Tap one only when it applies to you.</p>
+  <div class="letters-grid">
+    <div class="letter" onclick="this.classList.toggle('opened')">
+      <span class="icon">😢</span>
+      <div class="when">Open when you're sad</div>
+      <div class="status">Tap to open</div>
+      <div class="letter-msg">Call me. I don't care what time it is. You've done this for me a hundred times.</div>
+    </div>
+    <div class="letter" onclick="this.classList.toggle('opened')">
+      <span class="icon">🥳</span>
+      <div class="when">Open when you need to celebrate</div>
+      <div class="status">Tap to open</div>
+      <div class="letter-msg">Whatever it is — I'm in. Text me, I'm already getting ready.</div>
+    </div>
+    <div class="letter" onclick="this.classList.toggle('opened')">
+      <span class="icon">😰</span>
+      <div class="when">Open when you're doubting yourself</div>
+      <div class="status">Tap to open</div>
+      <div class="letter-msg">You've never once let me down. Not even close. Trust yourself the way I trust you.</div>
+    </div>
+    <div class="letter" onclick="this.classList.toggle('opened')">
+      <span class="icon">🎂</span>
+      <div class="when">Open next birthday</div>
+      <div class="status">Tap to open</div>
+      <div class="letter-msg">If you're reading this a year later — I hope this year gave you everything last year didn't.</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

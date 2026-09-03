@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Raksha Bandhan | Special Surprise for Sister 💖</title>
+  
+  <!-- Google Fonts: Fredoka & Nunito for cute bubbly UI, Playfair Display for letter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&family=Playfair+Display:ital,wght@0,600;1,400&family=Pacifico&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========================================================= -->
+  <!-- SCREEN 0: FLOWER PLANTING INTRO SCREEN                     -->
+  <!-- ========================================================= -->
+  <div id="introScreen" class="screen-container active intro-bg">
+    <div id="stars"></div>
+    <div id="hint-text">✿ Click anywhere to plant a flower ✿</div>
+    <div id="flower-container"></div>
+    <button id="btnExplore" class="btn-explore">Explore further ✨</button>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SCREEN 1: PASSCODE LOCK SCREEN (MATCHING REFERENCE IMAGE)  -->
+  <!-- ========================================================= -->
+  <div id="passcodeScreen" class="screen-container hidden">
+    <div class="passcode-wrapper">
+      
+      <!-- Left Panel: Gingham Pattern, Stars & Heart-Bordered Oval Artwork -->
+      <div class="passcode-left">
+        <!-- Sparkling Glitter Stars -->
+        <div class="sparkle-star s1">✦</div>
+        <div class="sparkle-star s2">✦</div>
+        <div class="sparkle-star s3">✦</div>
+        <div class="sparkle-star s4">✦</div>
+        <div class="sparkle-star s5">✦</div>
+        <div class="sparkle-star s6">✦</div>
+        <div class="sparkle-star s7">✦</div>
+        <div class="sparkle-star s8">✦</div>
+
+        <!-- Central Oval Frame -->
+        <div class="oval-frame-container">
+          <!-- Heart Border Ring -->
+          <div class="hearts-ring" id="heartsRing"></div>
+          
+          <!-- Inner Cream Oval Content featuring the Sibling / Chick artwork -->
+          <div class="oval-content">
+            <div class="chick-illustration">
+              <img src="assets/sibling.jpg" alt="Cute Brother and Sister Illustration" class="oval-main-img" id="ovalImage">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Pink Container with Passcode Keypad -->
+      <div class="passcode-right">
+        <h1 class="passcode-title">Enter a passcode</h1>
+
+        <!-- 4 Digit Input Display Slots -->
+        <div class="pin-display">
+          <div class="pin-slot" id="slot-0"><span class="pin-char"></span></div>
+          <div class="pin-slot" id="slot-1"><span class="pin-char"></span></div>
+          <div class="pin-slot" id="slot-2"><span class="pin-char"></span></div>
+          <div class="pin-slot" id="slot-3"><span class="pin-char"></span></div>
+        </div>
+
+        <!-- Feedback / Error Message -->
+        <div id="passcodeMsg" class="passcode-msg"></div>
+
+        <!-- Numeric Keypad (Matching reference style with underlined numbers) -->
+        <div class="keypad-grid">
+          <button class="key-btn" data-key="1"><span class="key-val">1</span></button>
+          <button class="key-btn" data-key="2"><span class="key-val">2</span></button>
+          <button class="key-btn" data-key="3"><span class="key-val">3</span></button>
+          <button class="key-btn" data-key="4"><span class="key-val">4</span></button>
+          <button class="key-btn" data-key="5"><span class="key-val">5</span></button>
+          <button class="key-btn" data-key="6"><span class="key-val">6</span></button>
+          <button class="key-btn" data-key="7"><span class="key-val">7</span></button>
+          <button class="key-btn" data-key="8"><span class="key-val">8</span></button>
+          <button class="key-btn" data-key="9"><span class="key-val">9</span></button>
+          <button class="key-btn special-key" data-key="*"><span class="key-val">*</span></button>
+          <button class="key-btn" data-key="0"><span class="key-val">0</span></button>
+          <button class="key-btn special-key" data-key="DEL" aria-label="Delete"><span class="key-val">⌫</span></button>
+        </div>
+
+        <!-- Hint Section as requested by User -->
+        <div class="hint-container">
+          <button id="hintToggleBtn" class="hint-toggle-btn">💡 Need a hint?</button>
+          <div id="hintCard" class="hint-card hidden">
+            <span class="hint-icon">🎂</span>
+            <span class="hint-text">( Don't you remeber my birthday )</span>
+          </div>
+        </div>
+
+        <!-- Passcode Note -->
+        <div class="passcode-footer">
+          <span class="default-pin-note">💡 Tip: Enter any 4-digit birthday code!</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SCREEN 2: MAIN RAKSHA BANDHAN CELEBRATION PORTAL           -->
+  <!-- ========================================================= -->
+  <main id="mainScreen" class="screen-container hidden">
+
+    <!-- Top Navigation Bar -->
+    <nav class="festive-navbar">
+      <div class="nav-brand">
+        <span class="nav-icon">🧵</span>
+        <span class="nav-logo-text">Rakhi Special 💖</span>
+      </div>
+      <div class="nav-actions">
+        <button id="customiseBtn" class="nav-btn">🛠️ Customize</button>
+        <button id="soundToggleBtn" class="nav-btn">🎵 Music: ON</button>
+      </div>
+    </nav>
+
+    <!-- Hero Celebration Header (Matching 2nd Reference Image) -->
+    <section class="hero-festive">
+      <div class="hero-blob-wrapper">
+        <!-- Cute Puppy artwork positioned overlapping top right of card -->
+        <div class="puppy-artwork-container">
+          <img src="assets/puppy_rose.png" alt="Cute Puppy holding a Red Rose" class="hero-puppy-img">
+        </div>
+
+        <!-- Wavy Grid Paper Container -->
+        <div class="hero-wavy-card">
+          <div class="hero-card-content">
+            <h1 class="hero-title-hey">HEY!!</h1>
+            <p class="hero-sub1">I made something for you</p>
+            <p class="hero-sub2">Do you want to see?</p>
+            
+            <button id="btnHeroYes" class="btn-hero-yes"><u>Yes</u></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Heartfelt Envelope / Secret Letter Section -->
+    <section class="letter-section">
+      <div class="section-title">
+        <h2>💌 A Special Letter For You</h2>
+        <p>Tap the envelope below to open your brother's heartfelt message!</p>
+      </div>
+
+      <div class="envelope-wrapper">
+        <div id="envelopeCard" class="envelope-card">
+          <div class="envelope-front">
+            <div class="envelope-seal">💌</div>
+            <p class="envelope-label">Tap to Open Letter ✨</p>
+          </div>
+          <div class="letter-paper">
+            <div class="letter-header">Dearest <span class="letter-sister-name">Sister</span>,</div>
+            <div class="letter-body">
+              <p>Happy Raksha Bandhan! 🌸</p>
+              <p>We may fight over the smallest things, argue about who gets the TV remote, and tease each other non-stop... but deep down in my heart, you are my absolute favorite person in the entire world.</p>
+              <p>Thank you for always being there for me, for keeping my secrets, and for bringing so much brightness into my life. On this Rakshabandhan, I promise to protect you, support your dreams, and stand by your side no matter what!</p>
+              <p>PS: Yes, I remembered your birthday code passcode! 😉🎂</p>
+            </div>
+            <div class="letter-footer">
+              With all my love,<br>
+              <strong class="letter-brother-name">Your Brother</strong> 👦🏻❤️
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brother's Raksha Bandhan Gifts Section -->
+    <section class="gifts-section">
+      <div class="section-title">
+        <h2>🎁 Your Raksha Bandhan Gifts</h2>
+        <p>Scratch or tap each gift box to unwrap your special surprises from Brother!</p>
+      </div>
+
+      <div class="gifts-grid">
+
+        <div class="gift-card" data-gift="1">
+          <div class="gift-badge">RAKHI GIFT #1</div>
+          <div class="gift-content">
+            <div class="gift-icon">🍫</div>
+            <h3>Luxury Chocolates & Sweets</h3>
+            <p>A delicious hamper of your favorite chocolates & Raksha Bandhan sweets!</p>
+            <button class="btn-unwrap-gift locked">Scratch to Unwrap 🎁</button>
+          </div>
+          <canvas class="scratch-canvas"></canvas>
+        </div>
+
+        <div class="gift-card" data-gift="2">
+          <div class="gift-badge">RAKHI GIFT #2</div>
+          <div class="gift-content">
+            <div class="gift-icon">🛍️</div>
+            <h3>Shopping Spree Treat</h3>
+            <p>A special shopping gift treat for your favorite outfit & accessories!</p>
+            <button class="btn-unwrap-gift locked">Scratch to Unwrap 🎁</button>
+          </div>
+          <canvas class="scratch-canvas"></canvas>
+        </div>
+
+        <div class="gift-card" data-gift="3">
+          <div class="gift-badge">RAKHI GIFT #3</div>
+          <div class="gift-content">
+            <div class="gift-icon">🌸</div>
+            <h3>Personalized Memory Frame</h3>
+            <p>A beautiful customized sibling photo keepsake filled with love!</p>
+            <button class="btn-unwrap-gift locked">Scratch to Unwrap 🎁</button>
+          </div>
+          <canvas class="scratch-canvas"></canvas>
+        </div>
+
+        <div class="gift-card" data-gift="4">
+          <div class="gift-badge">RAKHI GIFT #4</div>
+          <div class="gift-content">
+            <div class="gift-icon">✨</div>
+            <h3>Brother's Secret Surprise</h3>
+            <p>A special mystery gift box reserved exclusively for Pyari Behen!</p>
+            <button class="btn-unwrap-gift locked">Scratch to Unwrap 🎁</button>
+          </div>
+          <canvas class="scratch-canvas"></canvas>
+        </div>
+
+
+    <!-- ========================================================= -->
+    <!-- SEC: TIC-TAC-TOE GAME                                     -->
+    <!-- ========================================================= -->
+    <section class="gifts-section hidden" id="sec-tic-tac-toe">
+      <div class="section-title">
+        <h2>🎮 Play Tic-Tac-Toe!</h2>
+        <p>Sister (🌸) vs Brother (🏵️) - Who will win?</p>
+      </div>
+      <div class="ttt-container" style="max-width: 320px; margin: 0 auto; background: #ffffff; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;">
+        <div class="ttt-board" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px;">
+          <div class="ttt-cell" data-cell-index="0" style="aspect-ratio: 1; background: #fef2f2; border: 2px dashed #f43f5e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; user-select: none;"></div>
+          <div class="ttt-cell" data-cell-index="1" style="aspect-ratio: 1; background: #fef2f2; border: 2px dashed #f43f5e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; user-select: none;"></div>
+          <div class="ttt-cell" data-cell-index="2" style="aspect-ratio: 1; background: #fef2f2; border: 2px dashed #f43f5e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; user-select: none;"></div>
+          <div class="ttt-cell" data-cell-index="3" style="aspect-ratio: 1; background: #fef2f2; border: 2px dashed #f43f5e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; user-select: none;"></div>
+          <div class="ttt-cell" data-cell-index="4" style="aspect-ratio: 1; background: #fef2f2; border: 2px dashed #f43f5e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; user-select: none;"></div>
+          <div class="ttt-cell" data-cell-index="5" style="aspect-ratio: 1; background: #fef2f2; border: 2px dashed #f43f5e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; user-select: none;"></div>
+          <div class="ttt-cell" data-cell-index="6" style="aspect-ratio: 1; background: #fef2f2; border: 2px dashed #f43f5e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; user-select: none;"></div>
+          <div class="ttt-cell" data-cell-index="7" style="aspect-ratio: 1; background: #fef2f2; border: 2px dashed #f43f5e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; user-select: none;"></div>
+          <div class="ttt-cell" data-cell-index="8" style="aspect-ratio: 1; background: #fef2f2; border: 2px dashed #f43f5e; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; user-select: none;"></div>
+        </div>
+        <div class="ttt-status" style="font-size: 1.2rem; font-weight: 700; color: #f43f5e; margin-bottom: 15px;">🌸 Turn</div>
+        <button id="tttResetBtn" class="btn-unwrap-gift" style="width: 100%;">Reset Game</button>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- SEC: CHOOSE THE CORRECT GAME (QUIZ)                        -->
+    <!-- ========================================================= -->
+    <section class="gifts-section hidden" id="sec-quiz-game">
+      <div class="section-title">
+        <h2>🧠 Choose the Correct Game</h2>
+        <p>Answer these sibling trivia questions correctly!</p>
+      </div>
+      <div class="quiz-container" style="max-width: 450px; margin: 0 auto; background: #ffffff; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+        <div class="quiz-card" style="text-align: center;">
+          <h3 id="quizQuestion" style="font-size: 1.1rem; color: #1e293b; margin-bottom: 20px; font-weight: 700;">Question 1: Who is the absolute favorite child in the family?</h3>
+          <div class="quiz-options" style="display: flex; flex-direction: column; gap: 10px;">
+            <button class="quiz-option-btn" data-correct="true" style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;">Sister 🌸 (Obviously)</button>
+            <button class="quiz-option-btn" data-correct="false" style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;">Brother 🏵️ (In his dreams)</button>
+          </div>
+          <div id="quizFeedback" class="quiz-feedback hidden" style="margin-top: 15px; font-weight: 700; font-size: 1rem; color: #f43f5e;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- SEC: PIXELATED GAME (CATCHER)                             -->
+    <!-- ========================================================= -->
+    <section class="gifts-section hidden" id="sec-pixel-game">
+      <div class="section-title">
+        <h2>👾 Pixilated Catcher Game</h2>
+        <p>Catch the falling hearts with the bowl!</p>
+      </div>
+      <div class="pixel-game-container" style="max-width: 320px; margin: 0 auto; background: #ffffff; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;">
+        <canvas id="pixelCanvas" width="280" height="250" style="background: #1e293b; border-radius: 12px; display: block; margin: 0 auto 15px; border: 3px solid #0f172a;"></canvas>
+        <div class="pixel-controls" style="display: flex; gap: 15px; justify-content: center; margin-bottom: 10px;">
+          <button id="pixelLeftBtn" class="btn-unwrap-gift" style="flex: 1;">&larr; Left</button>
+          <button id="pixelRightBtn" class="btn-unwrap-gift" style="flex: 1;">Right &rarr;</button>
+        </div>
+        <div class="pixel-score" style="font-size: 1.2rem; font-weight: 800; color: #f43f5e;">Score: <span id="pixelScoreVal">0</span></div>
+      </div>
+    </section>
+
+    <!-- Fun Sibling Memories Wall -->
+    <section class="memories-section">
+      <div class="section-title">
+        <h2>📸 Our Memory Wall & Promises</h2>
+        <p>Little moments that make our bond unforgettable!</p>
+      </div>
+
+      <div class="polaroid-gallery">
+        <div class="polaroid-card p1">
+          <div class="polaroid-img-box">
+            <img src="assets/headpat.jpg" alt="Cutest Head Pat" class="polaroid-real-img img-headpat">
+          </div>
+          <p class="polaroid-caption">Cutest Head Pat 🐾✨</p>
+        </div>
+
+        <div class="polaroid-card p2">
+          <div class="polaroid-img-box">
+            <img src="assets/pizza_partner.jpg" alt="Midnight Pizza Partner" class="polaroid-real-img img-pizza">
+          </div>
+          <p class="polaroid-caption">Midnight Pizza Partner 🍕</p>
+        </div>
+
+        <div class="polaroid-card p3">
+          <div class="polaroid-img-box">
+            <img src="assets/best_sister.png" alt="Best Sister Forever" class="polaroid-real-img img-sister">
+          </div>
+          <p class="polaroid-caption">Best Sister Forever 💖</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="festive-footer">
+      <p>Made with 💖 by Brother for his Dearest Sister | Raksha Bandhan 2026</p>
+      <button id="lockAgainBtn" class="btn-lock-again">🔒 Back to Passcode Screen</button>
+    </footer>
+
+  </main>
+
+
+
+  <!-- ========================================================= -->
+  <!-- MODAL: SEND REDEEM NOTIFICATION TO BROTHER                -->
+  <!-- ========================================================= -->
+  <div id="redeemModal" class="modal-overlay hidden">
+    <div class="modal-card redeem-modal-card">
+      <div class="redeem-modal-header">
+        <span class="redeem-modal-icon">🎉</span>
+        <h2>Voucher Redeemed!</h2>
+        <p class="modal-sub">Send an instant alert to your brother so he fulfills his promise!</p>
+      </div>
+
+      <div class="redeemed-voucher-info">
+        <span id="redeemedIcon" class="rv-icon">🍦</span>
+        <h3 id="redeemedTitle">Unlimited Ice Cream</h3>
+        <p id="redeemedDesc">Redeemable whenever you crave sweet treats!</p>
+      </div>
+
+      <div class="notify-actions">
+        <a id="sendWhatsappBtn" href="#" target="_blank" class="btn-notify btn-whatsapp">
+          <span class="btn-notify-icon">💬</span> Send via WhatsApp
+        </a>
+        <a id="sendEmailBtn" href="#" class="btn-notify btn-email">
+          <span class="btn-notify-icon">📧</span> Send via Email
+        </a>
+      </div>
+
+      <button id="closeRedeemModalBtn" class="btn-close-modal full-width">Done ✨</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: CUSTOM RAKHI WEBSITE BUILDER                       -->
+  <!-- ========================================================= -->
+  <div id="customizerModal" class="customizer-modal-overlay hidden">
+    <div class="customizer-modal-card">
+      <button id="closeCustomizerBtn" class="customizer-close-btn">&times;</button>
+      
+      <!-- SCREEN A: WHO IS HERE?? -->
+      <div id="customizerScreenA" class="customizer-screen">
+        <div class="customizer-header-brand">
+          <svg width="24" height="24" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-right: 6px;">
+            <circle cx="17" cy="17" r="15.5" stroke="#000000" stroke-width="3" fill="#ffffff"/>
+            <rect x="12" y="10" width="10" height="2" fill="#000000"/>
+            <rect x="10" y="12" width="14" height="7" fill="#000000"/>
+            <rect x="12" y="14" width="2" height="2" fill="#ffffff"/>
+            <rect x="20" y="14" width="2" height="2" fill="#ffffff"/>
+            <rect x="10" y="19" width="14" height="2" fill="#000000"/>
+            <rect x="9" y="21" width="2" height="4" fill="#000000"/>
+            <rect x="13" y="21" width="2" height="3" fill="#000000"/>
+            <rect x="17" y="21" width="2" height="4" fill="#000000"/>
+            <rect x="21" y="21" width="2" height="3" fill="#000000"/>
+            <rect x="23" y="22" width="2" height="3" fill="#000000"/>
+          </svg>
+          <span class="customizer-brand-name">Orolius.</span>
+        </div>
+        <h2 class="customizer-title">WHO IS HERE??</h2>
+        <div class="customizer-role-selector">
+          <button id="roleSisterBtn" class="customizer-outline-btn">Sister &rarr;</button>
+          <button id="roleBrotherBtn" class="customizer-outline-btn">Brother &rarr;</button>
+        </div>
+      </div>
+
+      <!-- SCREEN B: CHOOSE YOUR FIRST PAGE -->
+      <div id="customizerScreenB" class="customizer-screen hidden">
+        <div class="customizer-header-brand">
+          <svg width="24" height="24" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-right: 6px;">
+            <circle cx="17" cy="17" r="15.5" stroke="#000000" stroke-width="3" fill="#ffffff"/>
+            <rect x="12" y="10" width="10" height="2" fill="#000000"/>
+            <rect x="10" y="12" width="14" height="7" fill="#000000"/>
+            <rect x="12" y="14" width="2" height="2" fill="#ffffff"/>
+            <rect x="20" y="14" width="2" height="2" fill="#ffffff"/>
+            <rect x="10" y="19" width="14" height="2" fill="#000000"/>
+            <rect x="9" y="21" width="2" height="4" fill="#000000"/>
+            <rect x="13" y="21" width="2" height="3" fill="#000000"/>
+            <rect x="17" y="21" width="2" height="4" fill="#000000"/>
+            <rect x="21" y="21" width="2" height="3" fill="#000000"/>
+            <rect x="23" y="22" width="2" height="3" fill="#000000"/>
+          </svg>
+          <span class="customizer-brand-name">Orolius.</span>
+        </div>
+        <h2 class="customizer-title">CHOOSE YOUR FIRST PAGE</h2>
+        
+        <div class="customizer-grid">
+          <div class="customizer-grid-item selected" data-page="basicPage">
+            <span class="item-name">Basic Page</span>
+          </div>
+          <div class="customizer-grid-item selected" data-page="passcode">
+            <span class="item-name">Passcode</span>
+          </div>
+          <div class="customizer-grid-item selected" data-page="flowers">
+            <span class="item-name">Virtual Flowers</span>
+          </div>
+          <div class="customizer-grid-item" data-page="pixelGame">
+            <span class="item-name">Pixilated Game</span>
+          </div>
+          <div class="customizer-grid-item" data-page="quizGame">
+            <span class="item-name">Choose the Correct Game</span>
+          </div>
+          <div class="customizer-grid-item" data-page="ticTacToe">
+            <span class="item-name">Tic Toe</span>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+          <button id="applyCustomizerBtn" class="customizer-pill-btn">Customize your website</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

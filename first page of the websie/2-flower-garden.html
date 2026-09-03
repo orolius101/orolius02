@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plant a flower</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Space+Mono:wght@400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#170f2b;
+    --gold:#e7b955;
+    --blush:#f0a8c4;
+    --lavender:#a394c9;
+    --cream:#f7f1e6;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Poppins',sans-serif;
+    min-height:100vh;
+    padding:64px 20px;
+  }
+  .wrap{max-width:640px;margin:0 auto;}
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 12px;
+  }
+  h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:clamp(26px,5vw,36px);
+    margin:0 0 8px;
+  }
+  p.lead{color:rgba(247,241,230,0.72);line-height:1.6;margin:0 0 26px;font-size:14px;}
+
+  #garden{
+    position:relative;
+    height:380px;
+    border-radius:18px;
+    background:radial-gradient(ellipse at 50% 25%, #241a44, #100a20 78%);
+    overflow:hidden;
+    cursor:crosshair;
+    border:1px solid rgba(247,241,230,0.12);
+  }
+  #garden .hint{
+    position:absolute;
+    top:16px;left:0;right:0;
+    text-align:center;
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:1px;
+    color:var(--lavender);
+    pointer-events:none;
+  }
+  .star{position:absolute;width:2px;height:2px;background:var(--cream);border-radius:50%;}
+  .flower{position:absolute;transform:translate(-50%,-100%);pointer-events:none;}
+  .stem{transform-origin:13px 70px;animation:grow .5s ease-out;}
+  .bloom{opacity:0;animation:bloomIn .4s ease-out .45s forwards;}
+  @keyframes grow{from{transform:scaleY(0);}to{transform:scaleY(1);}}
+  @keyframes bloomIn{to{opacity:1;}}
+
+  #reset{
+    margin-top:16px;
+    background:transparent;
+    border:1px solid rgba(247,241,230,0.25);
+    color:var(--cream);
+    font-family:'Poppins',sans-serif;
+    font-size:12px;
+    padding:8px 18px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  #reset:hover{border-color:var(--gold);color:var(--gold);}
+  #reset:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+  @media (prefers-reduced-motion: reduce){
+    .stem, .bloom{animation:none !important; transform:scaleY(1); opacity:1;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">plant something</p>
+  <h2>a small garden, just for tonight</h2>
+  <p class="lead">click anywhere in the box below — each click plants a flower that stays.</p>
+  <div id="garden">
+    <p class="hint">click anywhere to plant a flower</p>
+  </div>
+  <button id="reset">clear the garden</button>
+</div>
+
+<script>
+(function(){
+  var garden = document.getElementById('garden');
+  var resetBtn = document.getElementById('reset');
+  var palette = ['#f7f1e6', '#f0a8c4', '#e7b955', '#c9a6f7'];
+
+  function addStars(){
+    for (var i = 0; i < 45; i++) {
+      var s = document.createElement('div');
+      s.className = 'star';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.top = Math.random() * 100 + '%';
+      s.style.opacity = (0.15 + Math.random() * 0.55).toFixed(2);
+      garden.appendChild(s);
+    }
+  }
+  addStars();
+
+  function plantFlower(x, y){
+    var color = palette[Math.floor(Math.random() * palette.length)];
+    var el = document.createElement('div');
+    el.className = 'flower';
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.innerHTML =
+      '<svg width="26" height="70" viewBox="0 0 26 70">' +
+        '<line class="stem" x1="13" y1="70" x2="13" y2="24" stroke="#6faa79" stroke-width="2"/>' +
+        '<circle class="bloom" cx="13" cy="14" r="9" fill="' + color + '"/>' +
+        '<circle class="bloom" cx="13" cy="14" r="3" fill="#e7b955"/>' +
+      '</svg>';
+    garden.appendChild(el);
+  }
+
+  garden.addEventListener('click', function(e){
+    var rect = garden.getBoundingClientRect();
+    plantFlower(e.clientX - rect.left, e.clientY - rect.top);
+  });
+
+  resetBtn.addEventListener('click', function(){
+    garden.querySelectorAll('.flower').forEach(function(f){ f.remove(); });
+  });
+})();
+</script>
+</body>
+</html>

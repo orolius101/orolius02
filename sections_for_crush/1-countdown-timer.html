@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Space+Mono:wght@400;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#170f2b; --card:#211640; --gold:#e7b955; --blush:#f0a8c4; --lavender:#a394c9; --cream:#f7f1e6; --line:rgba(247,241,230,0.14); }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--cream);font-family:'Poppins',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 20px;}
+  .wrap{max-width:420px;width:100%;text-align:center;}
+  .eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:0 0 10px;}
+  h2{font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,30px);margin:0 0 26px;}
+  .timer{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .timer .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 4px;}
+  .timer .num{font-family:'Space Mono',monospace;font-size:clamp(22px,6vw,30px);font-weight:700;color:var(--gold);}
+  .timer .lbl{font-size:10px;color:var(--lavender);letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
+  .sub{margin-top:20px;font-size:12px;color:rgba(247,241,230,0.6);}
+  .done{display:none;font-family:'Playfair Display',serif;font-size:22px;color:var(--blush);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">counting down to</p>
+  <h2 id="event-name">our next visit</h2>
+  <div class="timer">
+    <div class="box"><div class="num" id="d">00</div><div class="lbl">days</div></div>
+    <div class="box"><div class="num" id="h">00</div><div class="lbl">hrs</div></div>
+    <div class="box"><div class="num" id="m">00</div><div class="lbl">min</div></div>
+    <div class="box"><div class="num" id="s">00</div><div class="lbl">sec</div></div>
+  </div>
+  <p class="sub" id="sub-line">set the target date in the code to make this real</p>
+  <p class="done" id="done-msg">it's here. 🎉</p>
+</div>
+
+<script>
+(function(){
+  // EDIT THIS: set your target date/time here
+  var target = new Date();
+  target.setDate(target.getDate() + 14); // defaults to 14 days from whenever this loads
+
+  var d = document.getElementById('d');
+  var h = document.getElementById('h');
+  var m = document.getElementById('m');
+  var s = document.getElementById('s');
+  var timerEl = document.querySelector('.timer');
+  var doneMsg = document.getElementById('done-msg');
+
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+  function tick(){
+    var now = new Date();
+    var diff = target - now;
+    if (diff <= 0) {
+      timerEl.style.display = 'none';
+      doneMsg.style.display = 'block';
+      clearInterval(interval);
+      return;
+    }
+    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    var mins = Math.floor((diff / (1000 * 60)) % 60);
+    var secs = Math.floor((diff / 1000) % 60);
+    d.textContent = pad(days);
+    h.textContent = pad(hours);
+    m.textContent = pad(mins);
+    s.textContent = pad(secs);
+  }
+  tick();
+  var interval = setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>

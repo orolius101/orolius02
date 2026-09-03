@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age in Numbers — Birthday Section</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fff8ec;
+    --ink:#3a2a1a;
+    --coral-dark:#e14d3d;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'Nunito',sans-serif; background:var(--cream); color:var(--ink); }
+  h2{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(2rem,5vw,2.8rem); text-align:center; }
+  h2 span{ color:var(--coral-dark); }
+  .eyebrow{
+    font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--coral-dark);
+    letter-spacing:.08em; text-transform:uppercase; font-size:.82rem; text-align:center; margin-bottom:.5rem;
+  }
+  .sub{ color:#7a6650; text-align:center; max-width:42ch; margin:.6rem auto 2.6rem; font-weight:600; }
+  section{ padding:5rem 1.5rem; display:flex; flex-direction:column; align-items:center; min-height:100vh; justify-content:center; }
+
+  #agestats{ background:linear-gradient(180deg,var(--cream),#ffeedb); width:100%; }
+  .stat-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+    max-width:900px; width:100%; margin:1rem auto 0;
+  }
+  .stat-card{
+    background:var(--card); border-radius:18px; padding:1.6rem 1rem; text-align:center;
+    box-shadow:0 8px 20px rgba(58,42,26,.08);
+  }
+  .stat-num{
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(1.4rem,3vw,2.1rem);
+    color:var(--coral-dark);
+  }
+  .stat-label{ font-size:.78rem; color:#8a7660; font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin-top:.3rem; }
+  @media (max-width:640px){ .stat-grid{ grid-template-columns:repeat(2,1fr); } }
+</style>
+</head>
+<body>
+
+<section id="agestats">
+  <div class="eyebrow">🎈 The scoreboard</div>
+  <h2>Another Year, <span>By the Numbers</span></h2>
+  <p class="sub">A slightly excessive but very accurate breakdown of your time on Earth.</p>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-num" data-target="23">0</div><div class="stat-label">Years alive</div></div>
+    <div class="stat-card"><div class="stat-num" data-target="8405">0</div><div class="stat-label">Days lived</div></div>
+    <div class="stat-card"><div class="stat-num" data-target="1200">0</div><div class="stat-label">Cups of chai</div></div>
+    <div class="stat-card"><div class="stat-num" data-target="47">0</div><div class="stat-label">Birthdays celebrated with us</div></div>
+  </div>
+</section>
+
+<script>
+  const stats = document.querySelectorAll('.stat-num');
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        let current = 0;
+        const step = Math.max(1, Math.ceil(target/60));
+        const timer = setInterval(()=>{
+          current += step;
+          if(current >= target){ current = target; clearInterval(timer); }
+          el.textContent = current.toLocaleString();
+        }, 20);
+        observer.unobserve(el);
+      }
+    });
+  }, {threshold:.4});
+  stats.forEach(s=>observer.observe(s));
+</script>
+
+</body>
+</html>

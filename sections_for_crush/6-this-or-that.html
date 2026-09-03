@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>This or that</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Space+Mono:wght@400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#170f2b; --card:#211640; --gold:#e7b955; --blush:#f0a8c4; --lavender:#a394c9; --cream:#f7f1e6; --line:rgba(247,241,230,0.14); }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--cream);font-family:'Poppins',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 20px;}
+  .wrap{max-width:400px;width:100%;text-align:center;}
+  .eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:0 0 10px;}
+  .progress{display:flex;gap:6px;justify-content:center;margin-bottom:20px;}
+  .progress span{width:22px;height:3px;background:var(--line);border-radius:2px;}
+  .progress span.active{background:var(--gold);}
+
+  #q-text{font-family:'Playfair Display',serif;font-size:19px;margin:0 0 18px;}
+  .choices{display:flex;gap:10px;}
+  .choice{
+    flex:1;background:var(--card);border:2px solid transparent;border-radius:14px;
+    padding:20px 10px;cursor:pointer;font-size:14px;color:var(--cream);
+    transition:transform .15s ease, border-color .15s ease;
+  }
+  .choice:hover{transform:translateY(-2px);}
+  .choice.picked{border-color:var(--gold);}
+
+  #summary{display:none;}
+  #summary h3{font-family:'Playfair Display',serif;font-size:20px;margin:0 0 14px;}
+  .summary-row{display:flex;justify-content:space-between;background:var(--card);border-radius:10px;padding:10px 14px;margin-bottom:6px;font-size:12px;text-align:left;}
+  .summary-row span:last-child{color:var(--blush);font-weight:500;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">this or that</p>
+  <div class="progress" id="dots"></div>
+
+  <div id="quiz">
+    <p id="q-text"></p>
+    <div class="choices">
+      <button class="choice" id="opt-a"></button>
+      <button class="choice" id="opt-b"></button>
+    </div>
+  </div>
+
+  <div id="summary">
+    <h3>here's what you picked</h3>
+    <div id="summary-list"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // EDIT THIS: your own questions
+  var questions = [
+    { q: 'first date energy', a: 'coffee and talk for hours', b: 'do something active' },
+    { q: 'movie night', a: 'comedy, no thinking required', b: 'something we\'ll debate after' },
+    { q: 'texting style', a: 'paragraphs', b: 'one word and a lot of it' },
+    { q: 'ideal weekend', a: 'do nothing, together', b: 'go somewhere new' }
+  ];
+
+  var idx = 0;
+  var answers = [];
+  var dotsEl = document.getElementById('dots');
+  var qText = document.getElementById('q-text');
+  var optA = document.getElementById('opt-a');
+  var optB = document.getElementById('opt-b');
+  var quizEl = document.getElementById('quiz');
+  var summaryEl = document.getElementById('summary');
+  var summaryList = document.getElementById('summary-list');
+
+  questions.forEach(function(_, i){
+    var d = document.createElement('span');
+    if (i === 0) d.className = 'active';
+    dotsEl.appendChild(d);
+  });
+
+  function render(){
+    var item = questions[idx];
+    qText.textContent = item.q;
+    optA.textContent = item.a;
+    optB.textContent = item.b;
+    optA.classList.remove('picked');
+    optB.classList.remove('picked');
+    Array.prototype.forEach.call(dotsEl.children, function(d, i){
+      d.className = i === idx ? 'active' : '';
+    });
+  }
+
+  function pick(choice){
+    answers.push({ q: questions[idx].q, a: choice });
+    if (idx < questions.length - 1) {
+      idx++;
+      render();
+    } else {
+      finish();
+    }
+  }
+
+  function finish(){
+    quizEl.style.display = 'none';
+    dotsEl.style.display = 'none';
+    summaryEl.style.display = 'block';
+    summaryList.innerHTML = '';
+    answers.forEach(function(a){
+      var row = document.createElement('div');
+      row.className = 'summary-row';
+      row.innerHTML = '<span>' + a.q + '</span><span>' + a.a + '</span>';
+      summaryList.appendChild(row);
+    });
+  }
+
+  optA.addEventListener('click', function(){ optA.classList.add('picked'); setTimeout(function(){ pick(optA.textContent); }, 150); });
+  optB.addEventListener('click', function(){ optB.classList.add('picked'); setTimeout(function(){ pick(optB.textContent); }, 150); });
+
+  render();
+})();
+</script>
+</body>
+</html>

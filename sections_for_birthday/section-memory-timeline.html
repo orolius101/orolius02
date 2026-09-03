@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Timeline — Birthday Section</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fff8ec;
+    --ink:#3a2a1a;
+    --coral:#ff6b5b;
+    --coral-dark:#e14d3d;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'Nunito',sans-serif; background:var(--cream); color:var(--ink); }
+  h2{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(2rem,5vw,2.8rem); text-align:center; }
+  h2 span{ color:var(--coral-dark); }
+  .eyebrow{
+    font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--coral-dark);
+    letter-spacing:.08em; text-transform:uppercase; font-size:.82rem; text-align:center; margin-bottom:.5rem;
+  }
+  .sub{ color:#7a6650; text-align:center; max-width:42ch; margin:.6rem auto 2.6rem; font-weight:600; }
+  section{ padding:5rem 1.5rem; display:flex; flex-direction:column; align-items:center; min-height:100vh; }
+
+  #timeline{ background:var(--cream); }
+  .tl{ position:relative; max-width:600px; width:100%; margin-top:1rem; }
+  .tl::before{
+    content:''; position:absolute; left:20px; top:6px; bottom:6px; width:3px;
+    background:repeating-linear-gradient(180deg,var(--coral) 0 8px, transparent 8px 16px);
+  }
+  .tl-item{ position:relative; padding-left:56px; margin-bottom:2.2rem; }
+  .tl-dot{
+    position:absolute; left:8px; top:2px; width:26px; height:26px; border-radius:50%;
+    background:var(--card); border:3px solid var(--coral); display:flex; align-items:center; justify-content:center;
+    font-size:.8rem; z-index:1;
+  }
+  .tl-year{ font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--coral-dark); font-size:.85rem; margin-bottom:.2rem; }
+  .tl-text{ font-weight:600; color:var(--ink); font-size:.95rem; line-height:1.5; }
+</style>
+</head>
+<body>
+
+<section id="timeline">
+  <div class="eyebrow">🕰️ How we got here</div>
+  <h2>Our <span>Memory Timeline</span></h2>
+  <p class="sub">A few stops along the way, in order this time.</p>
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-dot">👶</div>
+      <div class="tl-year">2003</div>
+      <div class="tl-text">The day you were born — everyone still talks about how loud you were.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">🎒</div>
+      <div class="tl-year">2009</div>
+      <div class="tl-text">First day of school, cried for ten minutes, then made three friends by lunch.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">🏆</div>
+      <div class="tl-year">2015</div>
+      <div class="tl-text">Won your first debate trophy and hasn't stopped arguing since.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">🎓</div>
+      <div class="tl-year">2021</div>
+      <div class="tl-text">Graduated, moved cities, somehow still calls every Sunday.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">🎉</div>
+      <div class="tl-year">2026</div>
+      <div class="tl-text">Today. Another year, still our favorite person to celebrate.</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
