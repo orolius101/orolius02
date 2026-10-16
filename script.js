@@ -3181,12 +3181,12 @@ async function launchGFBFCustomizer() {
             }
         }
 
-        // --- 6. Demo: Loyalty Card Automation ---
+        // --- 6. Demo: Repeat Bot ---
         if (e.target.closest('.btn-demo-loyalty')) {
             openModal(`
                 <div class="demo-box">
-                    <h3 class="demo-title">💳 Loyalty Card Automation Demo</h3>
-                    <p class="demo-sub">Interactive Digital Stamp Card system for repeat customer retention.</p>
+                    <h3 class="demo-title">🔄 Repeat Bot Demo</h3>
+                    <p class="demo-sub">Automated customer retention & repeat rewards system.</p>
                     
                     <div class="loyalty-card-demo">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
